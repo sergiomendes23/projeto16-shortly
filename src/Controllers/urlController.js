@@ -39,4 +39,26 @@ export async function getUrl(req, res){
         console.log(error)
         res.sendStatus(500);
     }
+};
+
+export async function shortUrl(req, res){
+    try{
+        const {shortUrl} = req.params
+
+        const short = await connection.query(`SELECT * FROM url WHERE "shortUrl" = $1`, [shortUrl]);
+
+        if(short.rows.lendth === 0){
+            return res.send("Endereço não encontrado").status(404)
+        }
+
+        const counterView = short.rows[0].visitCount +1;
+
+        await connection.query(`UPDATE url SET "visitCount" = $1 WHERE "shortUrl" = $2`, [counterView, shortUrl]);
+
+        res.redirect(short.rows[0].url);
+
+    }catch(error){
+        console.log(error)
+        res.sendStatus(500);
+    }
 }
