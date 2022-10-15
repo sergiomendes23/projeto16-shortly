@@ -3,7 +3,8 @@ CREATE TABLE users(
 	name TEXT NOT NULL,
 	email TEXT NOT NULL UNIQUE,
 	password TEXT NOT NULL,
-	"createdAt" TIMESTAMP DEFAULT NOW()
+	"createdAt" TIMESTAMP DEFAULT NOW(),
+	token TEXT NOT NULL
 );
 
 CREATE TABLE url(
