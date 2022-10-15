@@ -61,4 +61,24 @@ export async function shortUrl(req, res){
         console.log(error)
         res.sendStatus(500);
     }
-}
+};
+
+export async function deleteUrl(req, res){
+    try{
+        const {id} = req.params;
+        const userId = res.locals.userId;
+
+        const urlId = await connection.query(`SELECT * FROM url WHERE "id" = $1`, [id]);
+
+        if(urlId.rows.length === 0) res.sendStatus(404);
+        if(urlId.rows[0].userId !== userId) res.sendStatus(401);
+
+        await connection.query(`DELETE FROM url WHERE "id" = $1`, [id]);
+
+        res.sendStatus(204);
+
+    }catch(error){
+        console.log(error)
+        res.sendStatus(500);
+    }
+};
