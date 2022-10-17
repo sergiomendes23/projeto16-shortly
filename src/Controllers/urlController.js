@@ -12,7 +12,7 @@ export async function shortenUrl(req, res){
         [url]);
 
         if(urlExist.rows.length !== 0){
-            return res.sendStatus(409)
+            return res.sendStatus(401)
         }
         
         const shortUrl = nanoid();
@@ -90,9 +90,12 @@ export async function deleteUrl(req, res){
         WHERE "id" = $1`, 
         [id]);
 
-        if(urlId.rows.length === 0) res.sendStatus(404);
-        if(urlId.rows[0].userId !== userId) res.sendStatus(401);
-
+        if(urlId.rows.length === 0){
+            return res.sendStatus(404);
+        }
+        if(urlId.rows[0].userId !== userId){
+            return res.sendStatus(401);
+        }
         await connection.query(`
         DELETE FROM url 
         WHERE "id" = $1`, 

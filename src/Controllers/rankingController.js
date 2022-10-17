@@ -17,7 +17,7 @@ export async function ranking(req, res){
 
         const tenOrdened = [...tenUsers].sort((a, b) => b.visitCount - a.visitCount);
 
-        res.send(tenOrdened).status(200)
+        res.send(tenOrdened).status(200);
 
     }catch(error){
         console.log(error)
