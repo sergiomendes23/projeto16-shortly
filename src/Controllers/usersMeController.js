@@ -2,7 +2,6 @@ import connection from "../db.js";
 
 function urlData({urlId, url, shortUrl, visitCount}){
     return{id: urlId, shortUrl, url, visitCount};
-    console.log("passou")
 };
 
 export async function usersMe(req, res){

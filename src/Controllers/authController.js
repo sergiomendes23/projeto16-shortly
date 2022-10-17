@@ -9,7 +9,10 @@ export async function signUp(req, res){
     try{
         const {name, email, password} = req.body;
 
-        const customer = await connection.query(`SELECT * FROM users WHERE email = $1`, [email]);
+        const customer = await connection.query(`
+        SELECT * FROM users 
+        WHERE email = $1`, 
+        [email]);
         
         if(customer.rows.length !== 0){
             return res.sendStatus(401);
@@ -17,11 +20,10 @@ export async function signUp(req, res){
         
         const hashPass = bcrypt.hashSync(password, 10);
 
-        await connection.query(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3)`,[
-            name,
-            email,
-            hashPass
-        ]);
+        await connection.query(`
+        INSERT INTO users (name, email, password) 
+        VALUES ($1, $2, $3)`,
+        [name, email, hashPass]);
 
         res.sendStatus(201);
     }catch(error){
@@ -34,7 +36,10 @@ export async function signIn(req, res){
     try{
         const {email, password} = req.body;
 
-        const customer = await connection.query(`SELECT * FROM users WHERE email = $1`, [email]);
+        const customer = await connection.query(`
+        SELECT * FROM users 
+        WHERE email = $1`, 
+        [email]);
 
         if(customer.rows.length === 0){
             return res.sendStatus(401);

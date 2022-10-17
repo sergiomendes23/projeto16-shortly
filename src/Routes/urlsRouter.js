@@ -7,7 +7,7 @@ import {shortenUrl, getUrl, shortUrl, deleteUrl} from "../Controllers/urlControl
 
 const router = Router();
 
-router.post('/urls/shorten', validateToken, validateUrls, shortenUrl);
+router.post("/urls/shorten", validateToken, validateUrls, shortenUrl);
 router.get("/urls/:id", getUrl);
 router.get("/urls/open/:shortUrl", shortUrl);
 router.delete("/urls/:id", validateToken, deleteUrl);
