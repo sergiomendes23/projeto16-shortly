@@ -8,7 +8,7 @@ function validateToken(req, res, next){
 
     try{
         const token = authorization.replace("Bearer ", "");
-        const verifyToken = jwt.verify(token, process.env.SECRETKEY_JWT);
+        const verifyToken = jwt.verify(token, process.env.TOKEN_SECRET);
 
         const userId = verifyToken.userId
         res.locals.userId = userId

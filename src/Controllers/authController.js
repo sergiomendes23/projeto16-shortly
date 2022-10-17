@@ -49,12 +49,13 @@ export async function signIn(req, res){
 
         if(!validPass)return res.sendStatus(401);
 
-        const secretKey = process.env.SECRETKEY_JWT;
+        const secretKey = process.env.TOKEN_SECRET;
         const config = {expiresIn: 60 * 60}
 
         const token = jwt.sign({userId: customer.rows[0].id}, secretKey, config);
 
         res.send({token}).status(201);
+        
     }catch(error){
         console.log(error)
         return res.sendStatus(500);
